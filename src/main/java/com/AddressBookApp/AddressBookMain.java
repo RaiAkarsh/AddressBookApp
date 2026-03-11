@@ -1,6 +1,6 @@
 package com.AddressBookApp;
 
-import com.AddressBookApp.model.ContactPerson;
+import com.AddressBookApp.controller.AddressBookController;
 
 public class AddressBookMain {
 
@@ -8,17 +8,7 @@ public class AddressBookMain {
 
         System.out.println("Welcome to Address Book Program");
 
-        ContactPerson person = new ContactPerson(
-                "Akarsh",
-                "Rai",
-                "Delhi Road",
-                "Agra",
-                "UP",
-                "282002",
-                "9876543210",
-                "akarsh@gmail.com"
-        );
-
-        //person.display();
+        AddressBookController controller = new AddressBookController();
+        controller.addContact();
     }
 }
