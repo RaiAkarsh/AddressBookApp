@@ -52,5 +52,12 @@ public class AddressBookController {
         service.editContact(name);
 
         service.displayContacts();
+        
+        System.out.print("\nEnter First Name to Delete Contact: ");
+        String named = sc.nextLine();
+
+        service.deleteContact(named);
+
+        service.displayContacts();
     }
 }

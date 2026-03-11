@@ -83,4 +83,17 @@ public class AddressBookService {
 
         System.out.println("Contact Not Found");
     }
+    
+    public void deleteContact(String firstName){
+
+        boolean removed = addressBook.getContacts()
+                .removeIf(person ->
+                        person.getFirstName().equalsIgnoreCase(firstName));
+
+        if(removed){
+            System.out.println("Contact Deleted Successfully");
+        } else {
+            System.out.println("Contact Not Found");
+        }
+    }
 }
