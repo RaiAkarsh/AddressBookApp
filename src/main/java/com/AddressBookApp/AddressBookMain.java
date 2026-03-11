@@ -9,6 +9,6 @@ public class AddressBookMain {
         System.out.println("Welcome to Address Book Program");
 
         AddressBookController controller = new AddressBookController();
-        controller.addContact();
+        controller.start();
     }
 }

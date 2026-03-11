@@ -9,7 +9,7 @@ public class AddressBookController {
 
     AddressBookService service = new AddressBookService();
 
-    public void addContact() {
+    public void start() {
 
         Scanner sc = new Scanner(System.in);
 
@@ -42,6 +42,14 @@ public class AddressBookController {
         service.addContact(person);
 
         System.out.println("\nContact Added Successfully\n");
+
+        service.displayContacts();
+
+        // UC3
+        System.out.print("\nEnter First Name to Edit Contact: ");
+        String name = sc.nextLine();
+
+        service.editContact(name);
 
         service.displayContacts();
     }
