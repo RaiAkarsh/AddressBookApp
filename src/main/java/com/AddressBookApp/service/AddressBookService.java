@@ -4,62 +4,99 @@ import com.AddressBookApp.model.AddressBook;
 import com.AddressBookApp.model.ContactPerson;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Service
 public class AddressBookService {
 
-    AddressBook addressBook = new AddressBook();
+    // UC6 – Store multiple AddressBooks
+    private Map<String, AddressBook> addressBookMap = new HashMap<>();
+
+    private AddressBook currentAddressBook;
+
+    // Create new AddressBook
+    public void createAddressBook(String name) {
+
+        if (addressBookMap.containsKey(name)) {
+            System.out.println("AddressBook already exists!");
+            return;
+        }
+
+        AddressBook newBook = new AddressBook();
+        addressBookMap.put(name, newBook);
+        currentAddressBook = newBook;
+
+        System.out.println("AddressBook created: " + name);
+    }
+
+    // Switch AddressBook
+    public void selectAddressBook(String name) {
+
+        if (!addressBookMap.containsKey(name)) {
+            System.out.println("AddressBook not found!");
+            return;
+        }
+
+        currentAddressBook = addressBookMap.get(name);
+        System.out.println("Switched to: " + name);
+    }
 
     // UC2 – Add Contact
     public void addContact(ContactPerson person) {
-        addressBook.addContact(person);
-        System.out.println("Contact Added Successfully");
-    }
 
-    // UC3 – Edit Contact
-    public void editContact(String name, String newCity) {
-
-        for (ContactPerson person : addressBook.getContacts()) {
-            if (person.getFirstName().equalsIgnoreCase(name)) {
-                person.setCity(newCity);
-                System.out.println("Contact Updated");
-                return;
-            }
+        if (currentAddressBook == null) {
+            System.out.println("Create or select AddressBook first!");
+            return;
         }
 
-        System.out.println("Contact Not Found");
+        currentAddressBook.addContact(person);
+        System.out.println("Contact Added Successfully");
     }
 
     // UC4 – Delete Contact
     public void deleteContact(String name) {
 
+        if (currentAddressBook == null) return;
+
         ContactPerson toRemove = null;
 
-        for (ContactPerson person : addressBook.getContacts()) {
-            if (person.getFirstName().equalsIgnoreCase(name)) {
-                toRemove = person;
+        for (ContactPerson p : currentAddressBook.getContacts()) {
+            if (p.getFirstName().equalsIgnoreCase(name)) {
+                toRemove = p;
                 break;
             }
         }
 
         if (toRemove != null) {
-            addressBook.getContacts().remove(toRemove);
+            currentAddressBook.getContacts().remove(toRemove);
             System.out.println("Contact Deleted");
         } else {
             System.out.println("Contact Not Found");
         }
     }
 
-    // UC5 – Display Multiple Contacts
+    // Display contacts
     public void displayContacts() {
 
-        if (addressBook.getContacts().isEmpty()) {
-            System.out.println("No Contacts Found");
+        if (currentAddressBook == null) return;
+
+        for (ContactPerson p : currentAddressBook.getContacts()) {
+            p.display();
+            System.out.println("------------------");
+        }
+    }
+
+    // Display all AddressBooks
+    public void displayAddressBooks() {
+
+        if (addressBookMap.isEmpty()) {
+            System.out.println("No AddressBooks available");
             return;
         }
 
-        for (ContactPerson person : addressBook.getContacts()) {
-            person.display();
-            System.out.println("----------------------");
+        for (String name : addressBookMap.keySet()) {
+            System.out.println(name);
         }
     }
 }

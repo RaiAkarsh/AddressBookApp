@@ -14,24 +14,35 @@ public class AddressBookController {
     AddressBookService service;
 
     Scanner sc = new Scanner(System.in);
-    
+
     public void start() {
-    	System.out.println("Wellcome to the AddressBook");
+
         while (true) {
 
-            System.out.println("\n1 Add Contact");
-            System.out.println("2 Edit Contact");
-            System.out.println("3 Delete Contact");
+            System.out.println("\n1 Create AddressBook");
+            System.out.println("2 Select AddressBook");
+            System.out.println("3 Add Contact");
             System.out.println("4 Display Contacts");
-            System.out.println("5 Exit");
+            System.out.println("5 Show AddressBooks");
+            System.out.println("6 Exit");
+            System.out.println("Enter choice");
 
-            System.out.print("Enter choice: ");
             int choice = sc.nextInt();
             sc.nextLine();
 
             switch (choice) {
 
                 case 1:
+                    System.out.print("Enter AddressBook Name: ");
+                    service.createAddressBook(sc.nextLine());
+                    break;
+
+                case 2:
+                    System.out.print("Enter AddressBook Name: ");
+                    service.selectAddressBook(sc.nextLine());
+                    break;
+
+                case 3:
 
                     ContactPerson person = new ContactPerson();
 
@@ -41,59 +52,23 @@ public class AddressBookController {
                     System.out.print("Last Name: ");
                     person.setLastName(sc.nextLine());
 
-                    System.out.print("Address: ");
-                    person.setAddress(sc.nextLine());
-
                     System.out.print("City: ");
                     person.setCity(sc.nextLine());
-
-                    System.out.print("State: ");
-                    person.setState(sc.nextLine());
-
-                    System.out.print("Zip: ");
-                    person.setZip(sc.nextLine());
-
-                    System.out.print("Phone: ");
-                    person.setPhoneNumber(sc.nextLine());
-
-                    System.out.print("Email: ");
-                    person.setEmail(sc.nextLine());
 
                     service.addContact(person);
                     break;
 
-                case 2:
-
-                    System.out.print("Enter name to edit: ");
-                    String editName = sc.nextLine();
-
-                    System.out.print("Enter new city: ");
-                    String newCity = sc.nextLine();
-
-                    service.editContact(editName, newCity);
-                    break;
-
-                case 3:
-
-                    System.out.print("Enter name to delete: ");
-                    String deleteName = sc.nextLine();
-
-                    service.deleteContact(deleteName);
-                    break;
-
                 case 4:
-
                     service.displayContacts();
                     break;
 
                 case 5:
+                    service.displayAddressBooks();
+                    break;
 
-                    System.out.println("Exiting...");
+                case 6:
+                	System.out.println("Exiting...");
                     return;
-
-                default:
-
-                    System.out.println("Invalid choice");
             }
         }
     }
