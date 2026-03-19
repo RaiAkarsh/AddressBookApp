@@ -10,12 +10,10 @@ import java.util.Map;
 @Service
 public class AddressBookService {
 
-    // UC6 – Store multiple AddressBooks
     private Map<String, AddressBook> addressBookMap = new HashMap<>();
 
     private AddressBook currentAddressBook;
 
-    // Create new AddressBook
     public void createAddressBook(String name) {
 
         if (addressBookMap.containsKey(name)) {
@@ -30,7 +28,6 @@ public class AddressBookService {
         System.out.println("AddressBook created: " + name);
     }
 
-    // Switch AddressBook
     public void selectAddressBook(String name) {
 
         if (!addressBookMap.containsKey(name)) {
@@ -42,7 +39,6 @@ public class AddressBookService {
         System.out.println("Switched to: " + name);
     }
 
-    // UC2 – Add Contact
     public void addContact(ContactPerson person) {
 
         if (currentAddressBook == null) {
@@ -54,10 +50,39 @@ public class AddressBookService {
         System.out.println("Contact Added Successfully");
     }
 
-    // UC4 – Delete Contact
+    public void editContact(String name, ContactPerson updatedPerson) {
+
+        if (currentAddressBook == null) {
+            System.out.println("No AddressBook selected!");
+            return;
+        }
+
+        for (ContactPerson p : currentAddressBook.getContacts()) {
+
+            if (p.getFirstName().equalsIgnoreCase(name)) {
+
+                p.setLastName(updatedPerson.getLastName());
+                p.setAddress(updatedPerson.getAddress());
+                p.setCity(updatedPerson.getCity());
+                p.setState(updatedPerson.getState());
+                p.setZip(updatedPerson.getZip());
+                p.setPhoneNumber(updatedPerson.getPhoneNumber());
+                p.setEmail(updatedPerson.getEmail());
+
+                System.out.println("Contact Updated Successfully");
+                return;
+            }
+        }
+
+        System.out.println("Contact Not Found");
+    }
+
     public void deleteContact(String name) {
 
-        if (currentAddressBook == null) return;
+        if (currentAddressBook == null) {
+            System.out.println("No AddressBook selected!");
+            return;
+        }
 
         ContactPerson toRemove = null;
 
@@ -76,10 +101,17 @@ public class AddressBookService {
         }
     }
 
-    // Display contacts
     public void displayContacts() {
 
-        if (currentAddressBook == null) return;
+        if (currentAddressBook == null) {
+            System.out.println("No AddressBook selected!");
+            return;
+        }
+
+        if (currentAddressBook.getContacts().isEmpty()) {
+            System.out.println("No Contacts Found");
+            return;
+        }
 
         for (ContactPerson p : currentAddressBook.getContacts()) {
             p.display();
@@ -87,7 +119,6 @@ public class AddressBookService {
         }
     }
 
-    // Display all AddressBooks
     public void displayAddressBooks() {
 
         if (addressBookMap.isEmpty()) {
