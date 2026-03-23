@@ -71,14 +71,14 @@ public class ContactPerson {
     }
 
 
-    public void display() {
-        System.out.println("First Name: " + firstName);
-        System.out.println("Last Name: " + lastName);
-        System.out.println("Address: " + address);
-        System.out.println("City: " + city);
-        System.out.println("State: " + state);
-        System.out.println("Zip: " + zip);
-        System.out.println("Phone Number: " + phoneNumber);
-        System.out.println("Email: " + email);
-    }
+//    public void display() {
+//        System.out.println("First Name: " + firstName);
+//        System.out.println("Last Name: " + lastName);
+//        System.out.println("Address: " + address);
+//        System.out.println("City: " + city);
+//        System.out.println("State: " + state);
+//        System.out.println("Zip: " + zip);
+//        System.out.println("Phone Number: " + phoneNumber);
+//        System.out.println("Email: " + email);
+//    }
 }

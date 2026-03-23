@@ -11,56 +11,41 @@ import java.util.Map;
 public class AddressBookService {
 
     private Map<String, AddressBook> addressBookMap = new HashMap<>();
-
     private AddressBook currentAddressBook;
 
-    public void createAddressBook(String name) {
-
+    public String createAddressBook(String name) {
         if (addressBookMap.containsKey(name)) {
-            System.out.println("AddressBook already exists!");
-            return;
+            return "AddressBook already exists!";
         }
-
         AddressBook newBook = new AddressBook();
         addressBookMap.put(name, newBook);
         currentAddressBook = newBook;
-
-        System.out.println("AddressBook created: " + name);
+        return "AddressBook created: " + name;
     }
 
-    public void selectAddressBook(String name) {
-
+    public String selectAddressBook(String name) {
         if (!addressBookMap.containsKey(name)) {
-            System.out.println("AddressBook not found!");
-            return;
+            return "AddressBook not found!";
         }
-
         currentAddressBook = addressBookMap.get(name);
-        System.out.println("Switched to: " + name);
+        return "Switched to: " + name;
     }
 
-    public void addContact(ContactPerson person) {
-
+    public String addContact(ContactPerson person) {
         if (currentAddressBook == null) {
-            System.out.println("Create or select AddressBook first!");
-            return;
+            return "Create or select AddressBook first!";
         }
-
         currentAddressBook.addContact(person);
-        System.out.println("Contact Added Successfully");
+        return "Contact Added Successfully";
     }
 
-    public void editContact(String name, ContactPerson updatedPerson) {
+    public String editContact(String name, ContactPerson updatedPerson) {
 
         if (currentAddressBook == null) {
-            System.out.println("No AddressBook selected!");
-            return;
+            return "No AddressBook selected!";
         }
-
         for (ContactPerson p : currentAddressBook.getContacts()) {
-
             if (p.getFirstName().equalsIgnoreCase(name)) {
-
                 p.setLastName(updatedPerson.getLastName());
                 p.setAddress(updatedPerson.getAddress());
                 p.setCity(updatedPerson.getCity());
@@ -69,19 +54,17 @@ public class AddressBookService {
                 p.setPhoneNumber(updatedPerson.getPhoneNumber());
                 p.setEmail(updatedPerson.getEmail());
 
-                System.out.println("Contact Updated Successfully");
-                return;
+                return "Contact Updated Successfully";
             }
         }
 
-        System.out.println("Contact Not Found");
+        return "Contact Not Found";
     }
 
-    public void deleteContact(String name) {
+    public String deleteContact(String name) {
 
         if (currentAddressBook == null) {
-            System.out.println("No AddressBook selected!");
-            return;
+            return "No AddressBook selected!";
         }
 
         ContactPerson toRemove = null;
@@ -95,39 +78,20 @@ public class AddressBookService {
 
         if (toRemove != null) {
             currentAddressBook.getContacts().remove(toRemove);
-            System.out.println("Contact Deleted");
-        } else {
-            System.out.println("Contact Not Found");
+            return "Contact Deleted";
         }
+
+        return "Contact Not Found";
     }
 
-    public void displayContacts() {
-
+    public Object displayContacts() {
         if (currentAddressBook == null) {
-            System.out.println("No AddressBook selected!");
-            return;
+            return "No AddressBook selected!";
         }
-
-        if (currentAddressBook.getContacts().isEmpty()) {
-            System.out.println("No Contacts Found");
-            return;
-        }
-
-        for (ContactPerson p : currentAddressBook.getContacts()) {
-            p.display();
-            System.out.println("------------------");
-        }
+        return currentAddressBook.getContacts();
     }
 
-    public void displayAddressBooks() {
-
-        if (addressBookMap.isEmpty()) {
-            System.out.println("No AddressBooks available");
-            return;
-        }
-
-        for (String name : addressBookMap.keySet()) {
-            System.out.println(name);
-        }
+    public Object displayAddressBooks() {
+        return addressBookMap.keySet();
     }
 }
